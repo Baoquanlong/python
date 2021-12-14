@@ -1,0 +1,5 @@
+{
+    "jupyter.jupyterServerType": "local",
+    "python.analysis.autoSearchPaths": true,
+    "path-intellisense.absolutePathToWorkspace": true,
+}
