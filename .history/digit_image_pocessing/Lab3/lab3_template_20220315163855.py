@@ -59,7 +59,7 @@ def question1(image_input):
 
     plt.figure()
     plt.subplot(1,2,1)
-    plt.imshow(img , cmap='gray') # 原图
+    plt.imshow(image_input , cmap='gray') # 原图
     plt.subplot(1,2,2)
 
     plt.imshow(img_fft , cmap='gray') # 谱图，注意做个log变换
@@ -215,7 +215,7 @@ def question5(image_input):
     plt.imshow(DFT, cmap='gray') # 处理后图
     
     plt.show(block=False)
-    plt.pause(3)
+    plt.pause(100)
     plt.close()
 
 questions = [question1, question2, question3, question4, question5]
@@ -226,18 +226,4 @@ if __name__ == '__main__':
     question_count = len(questions)
     for index in range(0, question_count):
         questions[index](image_input_list[index])
-
-    # img = r"digit_image_pocessing\Lab3\translated_rectangle.tif"
-    # question1(img)
-    # img = r"digit_image_pocessing\Lab3\characters_test_pattern.tif"
-    # question2(img)
-    # img = r"characters_test_pattern.tif"
-    # question3(img)
-    # img = r"blurry_moon.tif"
-    # question4(img)
-    # img = r"cassini.tif"
-    # question5(img)
-
-
-
     pass

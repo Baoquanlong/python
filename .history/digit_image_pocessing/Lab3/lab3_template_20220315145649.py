@@ -11,6 +11,7 @@ For use in Lab3
 
 '''
 #%%
+from matplotlib import image
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -52,14 +53,14 @@ def My_ifft2d(img_fft, shift=True):
 #Q1, 使用translated_rectangle.tif, 一行两列，左：原图， 右：Fourier 谱图
 def question1(image_input):
     img = plt.imread(image_input)
-    img = img/np.max(img)
+    img = image_input/np.max(image_input)
     img_fft = My_fft2d(img)
     img_fft = np.log(abs(img_fft))
 
 
     plt.figure()
     plt.subplot(1,2,1)
-    plt.imshow(img , cmap='gray') # 原图
+    plt.imshow(image_input , cmap='gray') # 原图
     plt.subplot(1,2,2)
 
     plt.imshow(img_fft , cmap='gray') # 谱图，注意做个log变换
@@ -81,7 +82,7 @@ def question2(image_input):
     Distance = np.sqrt((grid[1]-center[0])**2 + (grid[0]-center[1])**2)            # 表示各个点到中心点的距离
     
     #image after fourier converter 
-    img = My_fft2d(img)
+    img = My_fft2d(image_input)
 
 
 
@@ -115,128 +116,61 @@ def question2(image_input):
     plt.imshow(np.real(img3) , cmap='gray') # glpf
 
     plt.show(block=False)
-    plt.pause(3)
+    plt.pause(10)
     plt.close()
 
 #Q3, 使用characters_test_pattern.tif, 一行三列，：ihpf, bhpf, ghpf
-def question3(image_input):
-    img = plt.imread(image_input)
-    h,w = img.shape
-    center = h/2,w/2
-    u_grid = np.linspace(0,h-1,h)
-    v_grid = np.linspace(0,w-1,w)
-    grid = np.meshgrid(v_grid,u_grid)
-    Distance = np.sqrt((grid[1]-center[0])**2 + (grid[0]-center[1])**2)            # 表示各个点到中心点的距离
-    
-    #image after fourier converter 
-    img = My_fft2d(img)
+# def question3(image_input):
 
+#     plt.figure()
+#     plt.subplot(1,3,1)
+#     plt.imshow( , cmap='gray') # ihpf
+#     plt.subplot(1,3,2)
+#     plt.imshow( , cmap='gray') #  bhpf
+#     plt.subplot(1,3,3)
+#     plt.imshow( , cmap='gray') # ghpf
 
-
-    #IHPF
-    D0 = 10
-    iH = np.where(Distance < D0, 1, 0)
-    iH = 1-iH
-    img1 = img * iH 
-    img1 = My_ifft2d(img1)
-
-
-
-    #BLPF 
-    D0 = 10
-    n = 1
-    bH = 1/(1+(D0/Distance)**2*n)
-    img2 = img * bH 
-    img2 = My_ifft2d(img2)
-
-    #GHPF
-    D0 = 40
-    gH = np.exp(-Distance**2/(2*D0**2))
-    gH = 1-gH
-    img3 = img * gH 
-    img3= My_ifft2d(img3)
-
-
-
-    plt.figure()
-    plt.subplot(1,3,1)
-    plt.imshow(np.real(img1), cmap='gray') # ihpf
-    plt.subplot(1,3,2)
-    plt.imshow(np.real(img2) , cmap='gray') #  bhpf
-    plt.subplot(1,3,3)
-    plt.imshow(np.real(img3) , cmap='gray') # ghpf
-
-    plt.show(block=False)
-    plt.pause(3)
-    plt.close()
+#     plt.show(block=False)
+#     plt.pause(3)
+#     plt.close()
 
 # #Q4, 使用blurry_moon.tif, 一行两列：原图，增强后图
-def question4(image_input):
-    img = plt.imread(image_input)
-    h,w = img.shape        
-    center = h/2,w/2
-    u_grid =  np.linspace(0,h-1,h)
-    v_grid = np.linspace(0,w-1,w)
-    grid = np.meshgrid(v_grid,u_grid)           
-    Distance = np.sqrt((grid[1]-center[0])**2 + (grid[0]-center[1])**2)            # 表示各个点到中心点的距离
+# def question4(image_input):
 
-    H = -4*np.pi**2*Distance**2
-    fimg = My_fft2d(img)
-    fimg = fimg/np.max(fimg)
-    lpimg = My_ifft2d(H*fimg) 
-    lpimg = lpimg/np.max(lpimg)
-    img1 = img - np.real(lpimg)
-
-
-
-
-    plt.figure()
-    plt.subplot(1,2,1)
-    plt.imshow(img , cmap='gray') # 原图
-    plt.subplot(1,2,2)
-    plt.imshow(img1 , cmap='gray') # 增强后图
+#     plt.figure()
+#     plt.subplot(1,2,1)
+#     plt.imshow( , cmap='gray') # 原图
+#     plt.subplot(1,2,2)
+#     plt.imshow( , cmap='gray') # 增强后图
     
-    plt.show(block=False)
-    plt.pause(3)
-    plt.close()
+#     plt.show(block=False)
+#     plt.pause(3)
+#     plt.close()
 
 # #Q5，使用cassini.tif, 一行两列：原图，处理后图
-def question5(image_input):
-    img = plt.imread(image_input)
-    DFT = My_fft2d(img)
-    DFT[:,int(img.shape[1]/2)] = 0              #对DFTcenter[1]列的值赋为0，即将DFT横波去掉.
-    DFT = np.real(My_ifft2d(DFT))               # 傅里叶反变换回去
+# def question5(image_input):
 
-
-    plt.figure()
-    plt.subplot(1,2,1)
-    plt.imshow(img , cmap='gray') # 原图
-    plt.subplot(1,2,2)
-    plt.imshow(DFT, cmap='gray') # 处理后图
+#     plt.figure()
+#     plt.subplot(1,2,1)
+#     plt.imshow( , cmap='gray') # 原图
+#     plt.subplot(1,2,2)
+#     plt.imshow( , cmap='gray') # 处理后图
     
-    plt.show(block=False)
-    plt.pause(3)
-    plt.close()
+#     plt.show(block=False)
+#     plt.pause(3)
+#     plt.close()
 
-questions = [question1, question2, question3, question4, question5]
+# questions = [question1, question2, question3, question4, question5]
 
 
 if __name__ == '__main__':
-    image_input_list = ["translated_rectangle.tif","characters_test_pattern.tif","characters_test_pattern.tif","blurry_moon.tif","cassini.tif"]
-    question_count = len(questions)
-    for index in range(0, question_count):
-        questions[index](image_input_list[index])
+    # image_input_list = [...]
+    # question_count = len(questions)
+    # for index in range(0, question_count):
 
-    # img = r"digit_image_pocessing\Lab3\translated_rectangle.tif"
-    # question1(img)
-    # img = r"digit_image_pocessing\Lab3\characters_test_pattern.tif"
-    # question2(img)
-    # img = r"characters_test_pattern.tif"
-    # question3(img)
-    # img = r"blurry_moon.tif"
-    # question4(img)
-    # img = r"cassini.tif"
-    # question5(img)
+    ## 自己的
+    img = r"digit_image_pocessing\Lab3\characters_test_pattern.tif"
+    question2(img)    
 
 
 

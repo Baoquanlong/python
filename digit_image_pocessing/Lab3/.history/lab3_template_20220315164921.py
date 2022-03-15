@@ -222,7 +222,7 @@ questions = [question1, question2, question3, question4, question5]
 
 
 if __name__ == '__main__':
-    image_input_list = ["translated_rectangle.tif","characters_test_pattern.tif","characters_test_pattern.tif","blurry_moon.tif","cassini.tif"]
+    image_input_list = ["translated_rectangle.tif","characters_test_pattern","characters_test_pattern.tif","blurry_moon.tif","cassini.tif"]
     question_count = len(questions)
     for index in range(0, question_count):
         questions[index](image_input_list[index])
