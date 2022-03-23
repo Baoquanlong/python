@@ -118,23 +118,26 @@ def Inverse_filtering(img_input):
     u = u-M/2
     v = v-N/2
 
+    #分子
     numerator = T * np.sin((np.pi)*(u*a+v*b)) 
+    #分母
     denominator = np.pi*(u*a+v*b)
+    #将分子分母的0改为近似值1e-7,其余值不变
     numerator = np.where(numerator == 0, 1e-7,numerator)
     denominator = np.where(denominator == 0,1e-7,denominator)
 
+    #求出H
     H = (numerator/denominator) * np.exp(-J* np.pi * (u*a+v*b))
-
-
     H_conjugate = np.conjugate(H)
+    #求出|H|**2
     product =  H * H_conjugate 
 
 
     #wienner
-    K = 0.5
-    F = (product/product+K)*(G/H)
+    K = 0.006
+    F = (product/(product+K))*(G/H)
     img_wienner = My_ifft2d(F)
-    img_wienner = np.real(img_wienner)
+    img_wienner = np.abs(np.real(img_wienner))
 
     #最小二乘
     gamma = 0.05
